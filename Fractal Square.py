@@ -12,7 +12,6 @@ def draw_square(screen, A, B, C, D, alpha, deep=10):
     draw_square(screen, *new_ABCD, alpha, deep-1)
 
 
-
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
