@@ -6,20 +6,22 @@ from PyQt5.QtCore import QSize
 
 
 class Field():
-    def __init__(self, window, name: str, position, size):
+    def __init__(self, window, name: str, position, size, method):
         self.nameLabel = QLabel(window)
         self.nameLabel.setText(name)
         self.line = QLineEdit(window)
 
         self.line.move(*position)
         self.line.resize(*size)
+        self.line.returnPressed.connect(method)
         self.nameLabel.move(position[0] - 60, position[1])
 
 
 class Button:
-    def __init__(self, window, name, size, position, function):
+    def __init__(self, window, name, size, position, function, isDefault=False):
         pybutton = QPushButton(name, window)
         pybutton.clicked.connect(function)
+        pybutton.setDefault(isDefault)
         pybutton.resize(*size)
         pybutton.move(*position)
 
@@ -31,11 +33,11 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(QSize(320, 180))
         self.setWindowTitle("Trading Helper")
 
-        self.field_up = Field(self, "Вход:", (80, 20), (200, 30))
-        self.field_middle = Field(self, "Стоп:", (80, 60), (200, 30))
-        self.field_down = Field(self, "Выход:", (80, 140), (200, 30))
+        self.field_up = Field(self, "Вход:", (80, 20), (200, 30), self.clickMethod)
+        self.field_middle = Field(self, "Стоп:", (80, 60), (200, 30), self.clickMethod)
+        self.field_down = Field(self, "Выход:", (80, 140), (200, 30), self.clickMethod)
 
-        calculate = Button(self, "Рассчитать", (100, 32), (180, 100), self.clickMethod)
+        calculate = Button(self, "Рассчитать", (100, 32), (180, 100), self.clickMethod, True)
         clear_button = Button(self, "Очистить", (100, 32), (80, 100), self.clear_fields)
 
     def clear_fields(self):
@@ -52,8 +54,8 @@ class MainWindow(QMainWindow):
             res = round(res, 4)
             return res
         try:
-            a = float(self.field_up.line.text())
-            b = float(self.field_middle.line.text())
+            a = float(self.field_up.line.text().replace(',', '.'))
+            b = float(self.field_middle.line.text().replace(',', '.'))
 
             self.field_down.line.setText(f"{get_z(a, b)}")
         except ValueError:
