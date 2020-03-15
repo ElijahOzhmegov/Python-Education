@@ -21,7 +21,6 @@ class Solution:
         return len(faced_characters) if len(faced_characters) > max_max else max_max
 
 
-
 if __name__ == '__main__':
     ss = Solution()
     assert ss.lengthOfLongestSubstring('cdd') == 2
