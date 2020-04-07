@@ -40,5 +40,5 @@ def generate_combinations(ls, m: int, prefix=None):
 
 if __name__ == '__main__':
     # generate_number(4, 3)
-    # generate_permutations(5, 3)
-    generate_combinations(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], 3)
+    generate_permutations(5, 3)
+    # generate_combinations(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], 3)
