@@ -63,7 +63,7 @@ if __name__ == "__main__":
     logging.basicConfig(format=format, level=logging.INFO,
                         datefmt="%H:%M:%S")
 
-    left = Process(target=left_process, args=(vector.items, ))
+    left  = Process(target=left_process, args=(vector.items, ))
     right = Process(target=right_process, args=(vector.items, ))
 
     left.start()
