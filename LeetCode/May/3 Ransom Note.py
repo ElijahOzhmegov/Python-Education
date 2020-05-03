@@ -1,15 +1,12 @@
 class Solution:
     @staticmethod
     def canConstruct(ransomNote: str, magazine: str) -> bool:
-        m_dict = {letter: 0 for letter in set(magazine)}
-
-        for letter in magazine:
-            m_dict[letter] += 1
+        n_dict = {letter: 0 for letter in ransomNote}
 
         for letter in ransomNote:
-            if letter not in m_dict: return False
-            m_dict[letter] -= 1
-            if m_dict[letter] < 0: return False
+            start = magazine.find(letter, n_dict[letter]) + 1
+            if start == 0: return False
+            n_dict[letter] = start
 
         return True
 
