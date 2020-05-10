@@ -4,28 +4,18 @@ from typing import List
 class Solution:
     @staticmethod
     def findJudge(N: int, trust: List[List[int]]) -> int:
-        if N == 1: return 1
-        con_dict = dict()  # [from me, to me]
+        src = [0] * N
+        dst = [0] * N
 
-        def check_n_expand(key):
-            if key not in con_dict:
-                con_dict[key] = [0, 0]
+        for src2dst in trust:
+            src[src2dst[0] - 1] += 1
+            dst[src2dst[1] - 1] += 1
 
-        for i in range(len(trust)):
-            con = trust[i]
+        for i in range(N):
+            if dst[i] == N - 1 and src[i] == 0:
+                return i + 1
 
-            check_n_expand(con[0])
-            check_n_expand(con[1])
-
-            con_dict[con[0]][0] += 1
-            con_dict[con[1]][1] += 1
-
-        ordered_con_list = sorted(con_dict.items(), key=lambda kvv: kvv[1][1])
-        desired = ordered_con_list[-1]
-
-        diff = desired[1][1] - desired[1][0] + 1
-
-        return desired[0] if diff == N else -1
+        return -1
 
 
 if __name__ == '__main__':
